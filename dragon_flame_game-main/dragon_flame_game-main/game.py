@@ -2,6 +2,7 @@ import pygame
 import time
 
 import controlers
+import dragon
 from config import *
 from dragon import *
 import shield
@@ -46,11 +47,11 @@ class Game:
                     joy_axis = event.axis
                     axis_value = event.value
                     player_joy = event.joy
-                    controlers.Controlers.control_keys(blue_dragon, player_joy, joy_axis, axis_value, 0, 1, 0)
-                    controlers.Controlers.control_keys(blue_wall, player_joy, joy_axis, axis_value, 2, 3, 0)
-                    controlers.Controlers.control_keys(green_dragon, player_joy, joy_axis, axis_value, 0, 1, 1)
-                    controlers.Controlers.control_keys(green_wall, player_joy, joy_axis, axis_value, 2, 3, 1)
-
+                    controlers.Controllers.dragons_control_keys(blue_dragon, player_joy, joy_axis, axis_value, 0, 1, 0)
+                    controlers.Controllers.shield_control_keys(blue_wall, player_joy, joy_axis, axis_value, 3, 0)
+                    controlers.Controllers.dragons_control_keys(green_dragon, player_joy, joy_axis, axis_value, 0, 1, 1)
+                    controlers.Controllers.shield_control_keys(green_wall, player_joy, joy_axis, axis_value, 3, 1)
+                    
             if event.type == pygame.JOYBUTTONDOWN:
                 import screens
                 if event.button == 3 :
