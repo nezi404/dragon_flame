@@ -1,5 +1,4 @@
 import pygame
-
 import config
 
 start_frames = config.start_sheet_height / config.start_frame_height
