@@ -44,11 +44,12 @@ class Dragon(pygame.sprite.Sprite):
 
     @staticmethod
     def blue_blow_fireball():
-        blue_fire = fireballs.Fireball(game.blue_dragon.rect.x, game.blue_dragon.rect.y, 65, 30, 5, game.green_dragon, game.green_wall, game.num_blue_bullet, game.blue_less_bullet)
+        blue_fire = fireballs.Fireball(game.blue_dragon.rect.x, game.blue_dragon.rect.y, 65, 30, 5, game.green_dragon, 
+                                       game.green_wall, game.num_blue_bullet, game.blue_less_bullet)
         return blue_fire
-    
+
     @staticmethod
     def green_blow_fireball():
-        green_fire = fireballs.Fireball(game.green_dragon.rect.x, game.green_dragon.rect.y, -50, 30, -5, game.blue_dragon, game.blue_wall, game.num_green_bullet, game.green_less_bullet)
+        green_fire = fireballs.Fireball(game.green_dragon.rect.x, game.green_dragon.rect.y, -50, 30, -5, 
+                                        game.blue_dragon, game.blue_wall, game.num_green_bullet, game.green_less_bullet)
         return green_fire
-        
