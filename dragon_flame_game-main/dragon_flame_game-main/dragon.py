@@ -26,11 +26,29 @@ class Dragon(pygame.sprite.Sprite):
             self.pos += self.speed * self.dir * dt
         self.rect = pygame.Rect(self.pos, self.size)
 
+    def upper_wall_collision(self, y):
+        if self.rect.y < y:
+            self.rect.y = y + 2
+
+    def lower_wall_collision(self, y):
+        if self.rect.y > y:
+            self.rect.y = y - 2
+
+    def left_wall_collision(self, x):
+        if self.rect.x < x:
+            self.rect.x = x + 2
+
+    def right_wall_collision(self, x):
+        if self.rect.x > x:
+            self.rect.x = x - 2
+
     @staticmethod
     def blue_blow_fireball():
         blue_fire = fireballs.Fireball(game.blue_dragon.rect.x, game.blue_dragon.rect.y, 65, 30, 5, game.green_dragon, game.green_wall, game.num_blue_bullet, game.blue_less_bullet)
         return blue_fire
+    
     @staticmethod
     def green_blow_fireball():
         green_fire = fireballs.Fireball(game.green_dragon.rect.x, game.green_dragon.rect.y, -50, 30, -5, game.blue_dragon, game.blue_wall, game.num_green_bullet, game.green_less_bullet)
         return green_fire
+        
