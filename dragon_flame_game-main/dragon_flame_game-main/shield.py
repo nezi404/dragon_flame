@@ -11,7 +11,7 @@ class Shield(pygame.sprite.Sprite):
         self.image = pygame.image.load(f"sprites/{sprite}.png")
         self.rect = pygame.Rect(x, y, 0, 0)
         self.pos = (x, y)
-        self.size = (0, 0)
+        self.size = (60, 80)
         self.speed = speed
         self.image = pygame.transform.scale(self.image, [90, 80])
         self.dir = pygame.math.Vector2()

@@ -24,6 +24,7 @@ blue_angle = 70
 green_angle = -70
 
 dragon_speed = 100
+dragon_size = (660, 500)
 
 initial_bd_x_pos = 70
 initial_gd_x_pos = 1230
@@ -34,8 +35,11 @@ blue_wall = pygame.sprite.Sprite(drawGroup)
 green_wall = pygame.sprite.Sprite(drawGroup)
 blue_w = "blue_wall"
 green_w = "green_wall"
+shield_size = (830, 365)
 
-shield_speed = 80
+
+
+shield_speed = 15
 
 initial_bw_x_pos = 200
 initial_gw_x_pos = 1100
@@ -64,3 +68,10 @@ return_sheet_height = 540
 return_xcoor = screen_width/2 - start_frame_width/2
 return_ycoor = screen_height - screen_height/3
 return_button_cooldown = 90
+# fireball related
+fireball_img = image_loader("sprites/fireball_image.png")
+fireball_scale = 1.5
+fireball_frame_width = 24 * fireball_scale
+fireball_frame_height = 24 * fireball_scale
+
+max_num_bullets = 6
