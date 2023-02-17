@@ -2,7 +2,7 @@ import dragon
 import shield
 
 
-class Controllers(dragon.Dragon, shield.Shield):
+class Controls(dragon.Dragon, shield.Shield):
     def __init__(self):
         super().__init__()
 
@@ -21,5 +21,4 @@ class Controllers(dragon.Dragon, shield.Shield):
                     self.dir.x = valoreve * speed
                 else:
                     self.dir.x = 0
-        Controllers.shield_control_keys(self, player_control, coor_axis, valoreve, axisnumy, joynum, speed)
-
+        Controls.shield_control_keys(self, player_control, coor_axis, valoreve, axisnumy, joynum, speed)
