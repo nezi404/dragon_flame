@@ -11,7 +11,7 @@ class Shield(pygame.sprite.Sprite):
         self.image = pygame.image.load(f"sprites/{sprite}.png")
         self.rect = pygame.Rect(x, y, 0, 0)
         self.pos = (x, y)
-        self.size = (60, 80)
+        self.size = (0, 0)
         self.speed = speed
         self.image = pygame.transform.scale(self.image, [90, 80])
         self.dir = pygame.math.Vector2()
@@ -20,3 +20,11 @@ class Shield(pygame.sprite.Sprite):
         if self.dir.magnitude() > 0:
             self.pos += self.speed * self.dir * dt
         self.rect = pygame.Rect(self.pos, self.size)
+
+    def upper_wall_collision(self, y):
+        if self.rect.y < y:
+            self.rect.y = y + 2
+
+    def lower_wall_collision(self, y):
+        if self.rect.y > y:
+            self.rect.y = y - 2
