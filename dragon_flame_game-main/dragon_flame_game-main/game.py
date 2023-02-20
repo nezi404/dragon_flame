@@ -106,7 +106,7 @@ class Game:
             current_time = pygame.time.get_ticks()
 
             if start and game_pause is False:
-                self.scor = score.score(blue_colour, green_colour, blue_score, green_score, (600, 45), (775, 45), b_life, b_shield, g_life, b_life, (10, 70), (screen_width - 375, 70))
+                self.scor = score.score(blue_colour, green_colour, blue_score, green_score, (600, 45), (775, 45), b_life, b_shield, g_life, g_shield, (10, 70), (screen_width - 375, 70))
                 drawGroup.draw(screen)
                 Dragon.dragon_move(green_dragon, dt)
                 Dragon.dragon_move(blue_dragon, dt)
