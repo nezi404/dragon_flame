@@ -60,16 +60,16 @@ class Game:
                     joy_axis = event.axis
                     axis_value = event.value
                     player_joy = event.joy
-                    Controls.dragons_control_keys(blue_dragon, player_joy, joy_axis, axis_value, 0, 1, 0, 1)
+                    Controls.dragons_control_keys(blue_dragon, player_joy, joy_axis, axis_value, 0, 1, 1, 1)
                     Controls.shield_control_keys(blue_wall, player_joy, joy_axis, axis_value, 3, 0, shield_speed)
-                    Controls.dragons_control_keys(green_dragon, player_joy, joy_axis, axis_value, 0, 1, 1, 1)
+                    Controls.dragons_control_keys(green_dragon, player_joy, joy_axis, axis_value, 0, 1, 0, 1)
                     Controls.shield_control_keys(green_wall, player_joy, joy_axis, axis_value, 3, 1, shield_speed)
 
             if event.type == pygame.JOYBUTTONDOWN:
                 import screens
                 if not game_pause and start:
                     global green_bullet, blue_bullet
-                    if event.button == 0 and event.joy == 0 and len(blue_fireball_group) < 6:
+                    if event.button == 0 and event.joy == 1 and len(blue_fireball_group) < 6:
                         blue_fire = fireballs.Fireball(blue_dragon, blue_dragon.rect.x,
                                                        blue_dragon.rect.y,
                                                        70,
@@ -78,7 +78,7 @@ class Game:
 
                         blue_fireball_group.add(blue_fire)
                         blue_bullet = True
-                    if event.button == 0 and event.joy == 1 and len(green_fireball_group) < 6:
+                    if event.button == 0 and event.joy == 0 and len(green_fireball_group) < 6:
 
                         green_fire = fireballs.Fireball(green_dragon, green_dragon.rect.x, green_dragon.rect.y, -50, 30, -5,
                                                         blue_dragon, blue_wall, green_wall)
