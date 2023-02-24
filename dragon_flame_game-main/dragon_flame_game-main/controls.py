@@ -22,3 +22,4 @@ class Controls(dragon.Dragon, shield.Shield):
                 else:
                     self.dir.x = 0
         Controls.shield_control_keys(self, player_control, coor_axis, valoreve, axisnumy, joynum, speed)
+        
