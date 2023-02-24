@@ -28,3 +28,4 @@ class Shield(pygame.sprite.Sprite):
     def lower_wall_collision(self, y):
         if self.rect.y > y:
             self.rect.y = y - 2
+            
