@@ -17,12 +17,24 @@ drawGroup = pygame.sprite.Group()
 green_dragon = pygame.sprite.Sprite(drawGroup)
 blue_dragon = pygame.sprite.Sprite(drawGroup)
 
+vulnerable_bd = "blue_vulnerable_dragon"
+vulnerable_gd = "green_vulnerable_dragon"
+
+death_bd = "death_b_dragon"
+death_gd = "death_g_dragon"
+
+cont_hit_b_shield = 0
+cont_hit_g_shield = 0
+
 blue_d = "blue_dragon"
 green_d = "green_dragon"
-b_life = 0
-g_life = 0
-b_shield = 0
-g_shield = 0
+
+b_life = 4
+g_life = 4
+b_shield = 50
+g_shield = 50
+blue_score = 0
+green_score = 0
 
 blue_angle = 70
 green_angle = -70
@@ -47,16 +59,22 @@ initial_bw_x_pos = 200
 initial_gw_x_pos = 1100
 initial_w_y_pos = 325
 
+# Power up
+blue_power_up = pygame.sprite.Sprite()
+green_power_up = pygame.sprite.Sprite()
+blue_pu = "blue_powerup"
+green_pu = "green_powerup"
+
 # Game display
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Dragon-Flame")
-
 
 
 def image_loader(image_path, x, y):
     image = pygame.image.load(image_path).convert_alpha()
     image = pygame.transform.scale(image, [x, y])
     return image
+
 
 # Start screen
 start_frame_height = 90
@@ -87,11 +105,12 @@ return_button_cooldown = 90
 # Fireball related
 fireball_scale = 1.5
 fireball_frame_width = 24 * fireball_scale
-fireball_frame_height = 24 * fireball_scale
-fireball_img = image_loader("sprites/fireball_image.png", fireball_frame_width, fireball_frame_height)
+fireball_frame_height = 12 * fireball_scale
+blue_fire_ball = image_loader("sprites/blue_flame.png", fireball_frame_width, fireball_frame_height)
+green_fire_ball = image_loader("sprites/green_flame.png", fireball_frame_width, fireball_frame_height)
 max_num_bullets = 6
 
-#scoring
+# Scoring
 font = "arial"
 green_colour = (0, 100, 0)
 blue_colour = (11, 11, 70)
