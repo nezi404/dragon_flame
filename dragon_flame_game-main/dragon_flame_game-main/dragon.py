@@ -15,7 +15,7 @@ class Dragon(pygame.sprite.Sprite):
         self.speed = speed
         self.dir = pygame.math.Vector2()
         self.image = pygame.image.load(f"sprites/{sprite}.png")
-        self.rect = pygame.Rect((self.pos), self.size)
+        self.rect = pygame.Rect(self.pos, self.size)
         self.image = pygame.transform.scale(self.image, [90, 70])
         self.image = pygame.transform.rotate(self.image, ang)
         self.score = 0
@@ -40,5 +40,3 @@ class Dragon(pygame.sprite.Sprite):
     def right_wall_collision(self, x):
         if self.rect.x > x:
             self.rect.x = x - 2
-
-
