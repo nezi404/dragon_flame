@@ -11,7 +11,7 @@ class Dragon(pygame.sprite.Sprite):
 
     def draw_dragons(self, sprite, x, y, speed, ang):
         self.pos = (x, y)
-        self.size = (70, 50)
+        self.size = (70, 80)
         self.speed = speed
         self.dir = pygame.math.Vector2()
         self.image = pygame.image.load(f"sprites/{sprite}.png")

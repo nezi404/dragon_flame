@@ -1,4 +1,5 @@
 import pygame
+import screens
 
 pygame.font.init()
 pygame.mixer.init()
@@ -11,6 +12,7 @@ screen_height = 680
 clk = pygame.time.Clock()
 hit_timer = 0
 fps = 60
+black_colour = (0, 0, 0)
 
 # Dragons
 drawGroup = pygame.sprite.Group()
@@ -52,6 +54,7 @@ green_wall = pygame.sprite.Sprite(drawGroup)
 blue_w = "blue_wall"
 green_w = "green_wall"
 
+game_font = "font/PressStart2P.ttf"
 shield_size = (830, 365)
 shield_speed = 15
 
@@ -70,26 +73,25 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Dragon-Flame")
 
 
-def image_loader(image_path, x, y):
-    image = pygame.image.load(image_path).convert_alpha()
-    image = pygame.transform.scale(image, [x, y])
-    return image
+
 
 
 # Start screen
 start_frame_height = 90
 start_frame_width = 580
 start_sheet_height = 540
-start_img_sheet = image_loader("sprites/start_message1.png", start_frame_width, start_sheet_height)
+start_img_sheet = screens.image_loader("sprites/start_message1.png", start_frame_width, start_sheet_height)
 start_x_coor = screen_width/2 - start_frame_width/2
 start_y_coor = screen_height - screen_height/3
 start_button_cooldown = 90
+start_frames = start_sheet_height / start_frame_height
+
 
 name_sacale = 3
 game_name_frame_height = 70 * name_sacale
 game_name_frame_width = 320 * name_sacale
 game_name_sheet_height = 560 * name_sacale
-game_name_img_sheet = image_loader("sprites/dragon_flame.png", game_name_frame_width, game_name_sheet_height)
+game_name_img_sheet = screens.image_loader("sprites/dragon_flame.png", game_name_frame_width, game_name_sheet_height)
 name_x_coor = screen_width/2 - game_name_frame_width/2
 name_y_coor = 150
 
@@ -97,7 +99,7 @@ name_y_coor = 150
 return_frame_height = 90
 return_frame_width = 615
 return_sheet_height = 450
-return_img_sheet = image_loader("sprites/return_message.png", return_frame_width, return_sheet_height)
+return_img_sheet = screens.image_loader("sprites/return_message.png", return_frame_width, return_sheet_height)
 return_x_coor = screen_width/2 - start_frame_width/2
 return_y_coor = screen_height - screen_height/3
 return_button_cooldown = 90
@@ -106,11 +108,33 @@ return_button_cooldown = 90
 fireball_scale = 1.5
 fireball_frame_width = 24 * fireball_scale
 fireball_frame_height = 12 * fireball_scale
-blue_fire_ball = image_loader("sprites/blue_flame.png", fireball_frame_width, fireball_frame_height)
-green_fire_ball = image_loader("sprites/green_flame.png", fireball_frame_width, fireball_frame_height)
+blue_fire_ball = screens.image_loader("sprites/blue_flame.png", fireball_frame_width, fireball_frame_height)
+green_fire_ball = screens.image_loader("sprites/green_flame.png", fireball_frame_width, fireball_frame_height)
 max_num_bullets = 6
 
 # Scoring
 font = "arial"
 green_colour = (0, 100, 0)
 blue_colour = (11, 11, 70)
+
+# Winning
+max_win_frames = 7
+win_sheet_height = 455
+blue_win_frame_width = 910
+green_win_frame_width = 992
+win_frame_height = win_sheet_height/max_win_frames
+win_length = 20
+blue_wins_sheet = screens.image_loader("sprites/blue_wins.png", blue_win_frame_width , win_sheet_height)
+green_wins_sheet = screens.image_loader("sprites/green_wins.png", green_win_frame_width , win_sheet_height)
+win_x_coor = 260
+win_y_coor = 350
+
+
+#Sounds
+menu_sound = "sounds/start_pause_sound.wav"
+fireball_sound = "sounds/fire_blow.mp3"
+win_sound = "sounds/victory_sound.mp3"
+
+
+
+

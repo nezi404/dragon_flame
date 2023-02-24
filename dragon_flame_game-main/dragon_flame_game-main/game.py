@@ -68,16 +68,19 @@ class Game:
                     joy_axis = event.axis
                     axis_value = event.value
                     player_joy = event.joy
-                    Controls.dragons_control_keys(blue_dragon, player_joy, joy_axis, axis_value, 0, 1, 0, 1)
+                    Controls.dragons_control_keys(blue_dragon, player_joy, joy_axis, axis_value, 0, 1, 1, 1)
                     Controls.shield_control_keys(blue_wall, player_joy, joy_axis, axis_value, 3, 0, shield_speed)
-                    Controls.dragons_control_keys(green_dragon, player_joy, joy_axis, axis_value, 0, 1, 1, 1)
-                    Controls.shield_control_keys(green_wall, player_joy, joy_axis, axis_value, 3, 0, shield_speed)
+                    Controls.dragons_control_keys(green_dragon, player_joy, joy_axis, axis_value, 0, 1, 0, 1)
+                    Controls.shield_control_keys(green_wall, player_joy, joy_axis, axis_value, 3, 1, shield_speed)
 
             if event.type == pygame.JOYBUTTONDOWN:
                 import screens
                 if not game_pause and start:
                     global green_bullet, blue_bullet, move_b_power, move_g_power
-                    if event.button == 0 and event.joy == 0 and len(blue_fireball_group) < 6:
+                    if event.button == 0 and event.joy == 1 and len(blue_fireball_group) < 6:
+                        pygame.mixer.music.load(fireball_sound)
+                        pygame.mixer.music.set_volume(0.5)
+                        pygame.mixer.music.play()
                         blue_fire = fireballs.Fireball(blue_fire_ball, blue_dragon, blue_dragon.rect.x,
                                                        blue_dragon.rect.y,
                                                        70,
@@ -87,7 +90,9 @@ class Game:
                         blue_fireball_group.add(blue_fire)
                         blue_bullet = True
                     if event.button == 0 and event.joy == 0 and len(green_fireball_group) < 6:
-
+                        pygame.mixer.music.load(fireball_sound)
+                        pygame.mixer.music.set_volume(0.5)
+                        pygame.mixer.music.play()
                         green_fire = fireballs.Fireball(green_fire_ball, green_dragon, green_dragon.rect.x,
                                                         green_dragon.rect.y, -50, 30, -5,
                                                         blue_dragon, blue_wall, green_wall, g_shield)
@@ -103,16 +108,19 @@ class Game:
                             move_g_power = True
 
                 if event.button == 3:
+                    pygame.mixer.music.load(menu_sound)
+                    pygame.mixer.music.play()
                     if start:
                         game_pause = not game_pause
                     else:
                         start = True
 
     def game_loop(self):
+        import screens
         global blue_dragon_dir, green_bullet, blue_bullet, num_green_bullet, \
             num_blue_bullet, blue_fire, green_fire, g_life, b_life, b_shield, g_shield, \
             cont_hit_b_shield, cont_hit_g_shield, g_vulnerable, b_vulnerable, move_power, \
-            blue_score, green_score, move_b_power, move_g_power, cond_g
+            blue_score, green_score, move_b_power, move_g_power, cond_g, frame
 
         blue_score = 0
         green_score = 0
@@ -126,14 +134,14 @@ class Game:
 
             if start and game_pause is False:
 
-                self.scor = score.score(blue_colour, green_colour, blue_score, green_score, (600, 45), (775, 45),
-                                        b_life, b_shield, g_life, g_shield, (10, 70), (screen_width - 375, 70))
+                self.scor = score.score(blue_colour, green_colour, blue_score, green_score, (550, 45), (700, 45),
+                                        b_life, b_shield, g_life, g_shield, (10, 70), (screen_width - 430, 70))
                 drawGroup.draw(screen)
                 Dragon.dragon_move(green_dragon, dt)
                 Dragon.dragon_move(blue_dragon, dt)
-                Dragon.upper_wall_collision(blue_dragon, 0)
+                Dragon.upper_wall_collision(blue_dragon, 75)
                 Dragon.lower_wall_collision(blue_dragon, 580)
-                Dragon.upper_wall_collision(green_dragon, 0)
+                Dragon.upper_wall_collision(green_dragon, 75)
                 Dragon.lower_wall_collision(green_dragon, 580)
                 Dragon.right_wall_collision(blue_dragon, initial_gw_x_pos - 150)
                 Dragon.left_wall_collision(blue_dragon, 0)
@@ -164,6 +172,15 @@ class Game:
                         Dragon.draw_dragons(green_dragon, vulnerable_gd, 2000, green_dragon.rect.y,
                                             dragon_speed, green_angle)
                         # //////////BLUE WINS
+                        pygame.mixer.music.load(win_sound)
+                        pygame.mixer.music.play()
+                        for a in range(max_win_frames * win_length):
+                            screen.fill(black_colour)
+                            frame = screens.frame_checker(frame, max_win_frames)
+                            screens.win_text(blue_wins_sheet, frame, blue_win_frame_width)
+                            pygame.display.flip()
+                            pygame.time.wait(50)
+                        exit()
 
                     if g_shield == 0 and cond_g is True:
                         g_vulnerable = 2
@@ -182,6 +199,17 @@ class Game:
                         Dragon.draw_dragons(blue_dragon, vulnerable_bd, 2000, blue_dragon.rect.y,
                                             dragon_speed, blue_angle)
                         # ///////////GREEN WINS
+                        pygame.mixer.music.load(win_sound)
+                        pygame.mixer.music.play()
+
+                        for a in range(max_win_frames * win_length):
+                            screen.fill(black_colour)
+                            frame = screens.frame_checker(frame, max_win_frames)
+                            screens.win_text(green_wins_sheet, frame, green_win_frame_width)
+                            pygame.display.flip()
+                            pygame.time.wait(50)
+                        exit()
+
 
                     if b_shield == 0 and cond_b is True:
                         b_vulnerable = 2
@@ -195,8 +223,17 @@ class Game:
                             if b_vulnerable == 1:
                                 Dragon.draw_dragons(blue_dragon, vulnerable_bd, 2000, blue_dragon.rect.y,
                                                     dragon_speed, blue_angle)
-
                                 # ////////////////////SCREEN GREEN WINS
+
+                                pygame.mixer.music.load(win_sound)
+                                pygame.mixer.music.play()
+                                for a in range(max_win_frames * win_length):
+                                    screen.fill(black_colour)
+                                    frame = screens.frame_checker(frame, max_win_frames)
+                                    screens.win_text(green_wins_sheet, frame, green_win_frame_width)
+                                    pygame.display.flip()
+                                    pygame.time.wait(50)
+                                exit()
 
                             green_score += 1
                             b_life -= 1
@@ -211,6 +248,16 @@ class Game:
                                                     dragon_speed, blue_angle)
 
                                 # ////////////////////SCREEN GREEN WINS
+
+                                pygame.mixer.music.load(win_sound)
+                                pygame.mixer.music.play()
+                                for a in range(max_win_frames * win_length):
+                                    screen.fill(black_colour)
+                                    frame = screens.frame_checker(frame, max_win_frames)
+                                    screens.win_text(green_wins_sheet, frame, green_win_frame_width)
+                                    pygame.display.flip()
+                                    pygame.time.wait(50)
+                                exit()
 
                             else:
                                 b_vulnerable = 2
@@ -245,6 +292,17 @@ class Game:
 
                                 # ////////////////////SCREEN BLUE WINS
 
+                                pygame.mixer.music.load(win_sound)
+                                pygame.mixer.music.play()
+                                for a in range(max_win_frames * win_length):
+                                    screen.fill(black_colour)
+                                    frame = screens.frame_checker(frame, max_win_frames)
+                                    screens.win_text(blue_wins_sheet, frame, blue_win_frame_width)
+                                    pygame.display.flip()
+                                    pygame.time.wait(50)
+                                exit()
+
+
                             blue_score += 1
                             g_life -= 1
                             g_vulnerable = 1
@@ -259,6 +317,15 @@ class Game:
                                                     dragon_speed, green_angle)
 
                                 # ////////////////////SCREEN BLUE WINS
+                                pygame.mixer.music.load(win_sound)
+                                pygame.mixer.music.play()
+                                for a in range(max_win_frames * win_length):
+                                    screen.fill(black_colour)
+                                    frame = screens.frame_checker(frame, max_win_frames)
+                                    screens.win_text(blue_wins_sheet, frame, blue_win_frame_width)
+                                    pygame.display.flip()
+                                    pygame.time.wait(50)
+                                exit()
 
                             else:
                                 g_vulnerable = 2
@@ -292,21 +359,19 @@ class Game:
                 import screens
                 import config
                 if not start:
-                    global image_update, frame
+                    global image_update
                     if current_time - image_update > config.start_button_cooldown:
                         image_update = current_time
+                        frame = screens.frame_checker(frame, config.start_frames)
                         screens.start_screen(frame)
-                        frame += 1
                         pygame.display.flip()
-                        if frame > screens.start_frames:
-                            frame = 0
+
 
                 if game_pause:
 
                     if current_time - image_update >= config.return_button_cooldown:
                         image_update = current_time
+                        frame = screens.frame_checker(frame, config.start_frames)
                         screens.game_pause_screen(frame)
-                        frame += 1
                         pygame.display.flip()
-                        if frame > screens.start_frames:
-                            frame = 0
+
