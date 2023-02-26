@@ -33,8 +33,8 @@ green_d = "green_dragon"
 
 b_life = 4
 g_life = 4
-b_shield = 50
-g_shield = 50
+b_shield = 30
+g_shield = 30
 blue_score = 0
 green_score = 0
 
@@ -80,7 +80,7 @@ pygame.display.set_caption("Dragon-Flame")
 start_frame_height = 90
 start_frame_width = 580
 start_sheet_height = 540
-start_img_sheet = screens.image_loader("sprites/start_message1.png", start_frame_width, start_sheet_height)
+start_img_sheet = screens.image_loader("sprites/start_message2.png", start_frame_width, start_sheet_height)
 start_x_coor = screen_width/2 - start_frame_width/2
 start_y_coor = screen_height - screen_height/3
 start_button_cooldown = 90
@@ -99,7 +99,7 @@ name_y_coor = 150
 return_frame_height = 90
 return_frame_width = 615
 return_sheet_height = 450
-return_img_sheet = screens.image_loader("sprites/return_message.png", return_frame_width, return_sheet_height)
+return_img_sheet = screens.image_loader("sprites/return_message1.png", return_frame_width, return_sheet_height)
 return_x_coor = screen_width/2 - start_frame_width/2
 return_y_coor = screen_height - screen_height/3
 return_button_cooldown = 90
@@ -134,6 +134,16 @@ win_y_coor = 350
 menu_sound = "sounds/start_pause_sound.wav"
 fireball_sound = "sounds/fire_blow.mp3"
 win_sound = "sounds/victory_sound.mp3"
+
+#background
+lightning_sheet_width = 1480
+lightning_sheet_height = 700
+lightning_frame_width = 148
+max_lightning_frames = 9
+lightning_sheet_img = screens.image_loader("sprites/lightning1.png", lightning_frame_width * (max_lightning_frames + 1), lightning_sheet_height)
+lightning_cooldown = 60
+lightning_random_cooldown = 4000
+background_image = screens.image_loader("sprites/background_image1.png", screen_width, screen_height - 100)
 
 
 

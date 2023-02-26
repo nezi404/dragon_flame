@@ -1,5 +1,9 @@
+import random
+
 import pygame
 import config
+import game
+from random import randint
 
 def image_loader(image_path, x, y):
     image = pygame.image.load(image_path).convert_alpha()
@@ -12,6 +16,13 @@ def frame_checker(frames, maxframe):
         frames = 0
     return frames
 
+def background_lightning(sheet, width, height, frame, random_x):
+    image = pygame.Surface((width, height)).convert_alpha()
+    image.set_colorkey((0, 128, 0))
+    image.blit(sheet, (0, 0), (frame * width, 0, width, height))
+    game.screen.blit(image, (random_x, 75))
+
+
 def sprite_frame(sheet, width, height, frame):
     image = pygame.Surface((width, height)).convert_alpha()
     image.blit(sheet, (0, 0), (0, height * frame, width, height))
@@ -19,7 +30,6 @@ def sprite_frame(sheet, width, height, frame):
     return image
 
 def win_text(sheet, frames, win_frame_width):
-    import game
     win = sprite_frame(sheet, win_frame_width, config.win_frame_height, frames)
     game.screen.blit(win, (config.win_x_coor, config.win_y_coor))
 

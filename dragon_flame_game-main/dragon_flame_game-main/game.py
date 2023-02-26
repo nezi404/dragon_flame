@@ -1,12 +1,10 @@
-import pygame
-import time
-import shield
+import random
 from controls import *
-from config import *
 from dragon import *
 from shield import *
 from powerup import *
 import score
+
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -29,7 +27,11 @@ Power.draw(green_power_up, green_pu, 550, 100)
 start = False
 game_pause = False
 image_update = pygame.time.get_ticks()
+image_update_random = image_update
+random_x = random.randint(10, 1360)
+
 frame = 0
+frame_background = 0
 
 num_green_bullet = 0
 num_blue_bullet = 0
@@ -69,9 +71,9 @@ class Game:
                     axis_value = event.value
                     player_joy = event.joy
                     Controls.dragons_control_keys(blue_dragon, player_joy, joy_axis, axis_value, 0, 1, 1, 1)
-                    Controls.shield_control_keys(blue_wall, player_joy, joy_axis, axis_value, 3, 0, shield_speed)
+                    Controls.shield_control_keys(blue_wall, player_joy, joy_axis, axis_value, 3, 1, shield_speed)
                     Controls.dragons_control_keys(green_dragon, player_joy, joy_axis, axis_value, 0, 1, 0, 1)
-                    Controls.shield_control_keys(green_wall, player_joy, joy_axis, axis_value, 3, 1, shield_speed)
+                    Controls.shield_control_keys(green_wall, player_joy, joy_axis, axis_value, 3, 0, shield_speed)
 
             if event.type == pygame.JOYBUTTONDOWN:
                 import screens
@@ -100,10 +102,11 @@ class Game:
 
                         green_bullet = True
 
-                    if event.button == 2 and event.joy == 0:
+                    if event.button == 2 and event.joy == 1:
                         if blue_score == 3:
                             move_b_power = True
 
+                    if event.button == 2 and event.joy == 0:
                         if green_score == 3:
                             move_g_power = True
 
@@ -120,13 +123,13 @@ class Game:
         global blue_dragon_dir, green_bullet, blue_bullet, num_green_bullet, \
             num_blue_bullet, blue_fire, green_fire, g_life, b_life, b_shield, g_shield, \
             cont_hit_b_shield, cont_hit_g_shield, g_vulnerable, b_vulnerable, move_power, \
-            blue_score, green_score, move_b_power, move_g_power, cond_g, frame
+            blue_score, green_score, move_b_power, move_g_power, cond_g, cond_b, frame, frame_background, image_update, random_x, image_update_random
+
 
         blue_score = 0
         green_score = 0
 
         while True:
-
             dt = clock.tick() / 1000
             self.check_events()
             screen.fill([0, 0, 0])
@@ -134,8 +137,26 @@ class Game:
 
             if start and game_pause is False:
 
+                screen.blit(background_image, (0, 100))
                 self.scor = score.score(blue_colour, green_colour, blue_score, green_score, (550, 45), (700, 45),
                                         b_life, b_shield, g_life, g_shield, (10, 70), (screen_width - 430, 70))
+
+
+                if current_time - image_update > lightning_cooldown:
+                    image_update = current_time
+                    frame_background = screens.frame_checker(frame_background, max_lightning_frames)
+                    if frame_background == 9:
+                        random_x = -300
+
+                    if current_time - image_update_random > lightning_random_cooldown:
+                        image_update_random = current_time
+                        random_x = random.randint(10, 1325)
+
+
+                screens.background_lightning(lightning_sheet_img, lightning_frame_width,
+                                              lightning_sheet_height,
+                                             frame_background, random_x)
+
                 drawGroup.draw(screen)
                 Dragon.dragon_move(green_dragon, dt)
                 Dragon.dragon_move(blue_dragon, dt)
@@ -164,6 +185,7 @@ class Game:
                     drawGroup.add(blue_power_up)
                     Power.move_right(blue_power_up, 8, 2000)
 
+
                     if g_shield > 0:
                         g_shield = 0
                         cond_g = False
@@ -188,8 +210,10 @@ class Game:
                                             dragon_speed, green_angle)
 
                 if move_g_power:
+
                     drawGroup.add(green_power_up)
                     Power.move_left(green_power_up, -8, -900)
+
 
                     if b_shield > 0:
                         b_shield = 0
@@ -359,7 +383,7 @@ class Game:
                 import screens
                 import config
                 if not start:
-                    global image_update
+
                     if current_time - image_update > config.start_button_cooldown:
                         image_update = current_time
                         frame = screens.frame_checker(frame, config.start_frames)
