@@ -79,7 +79,7 @@ class Game:
                 import screens
                 if not game_pause and start:
                     global green_bullet, blue_bullet, move_b_power, move_g_power
-                    if event.button == 0 and event.joy == 1 and len(blue_fireball_group) < 6:
+                    if event.button == 1 and event.joy == 1 and len(blue_fireball_group) < 6:
                         pygame.mixer.music.load(fireball_sound)
                         pygame.mixer.music.set_volume(0.5)
                         pygame.mixer.music.play()
@@ -91,7 +91,7 @@ class Game:
 
                         blue_fireball_group.add(blue_fire)
                         blue_bullet = True
-                    if event.button == 0 and event.joy == 0 and len(green_fireball_group) < 6:
+                    if event.button == 1 and event.joy == 0 and len(green_fireball_group) < 6:
                         pygame.mixer.music.load(fireball_sound)
                         pygame.mixer.music.set_volume(0.5)
                         pygame.mixer.music.play()
@@ -110,7 +110,7 @@ class Game:
                         if green_score == 3:
                             move_g_power = True
 
-                if event.button == 3:
+                if event.button == 0:
                     pygame.mixer.music.load(menu_sound)
                     pygame.mixer.music.play()
                     if start:
@@ -123,8 +123,8 @@ class Game:
         global blue_dragon_dir, green_bullet, blue_bullet, num_green_bullet, \
             num_blue_bullet, blue_fire, green_fire, g_life, b_life, b_shield, g_shield, \
             cont_hit_b_shield, cont_hit_g_shield, g_vulnerable, b_vulnerable, move_power, \
-            blue_score, green_score, move_b_power, move_g_power, cond_g, cond_b, frame, frame_background, image_update, random_x, image_update_random
-
+            blue_score, green_score, move_b_power, move_g_power, cond_g, cond_b, frame, frame_background, \
+            image_update, random_x, image_update_random
 
         blue_score = 0
         green_score = 0
@@ -141,7 +141,6 @@ class Game:
                 self.scor = score.score(blue_colour, green_colour, blue_score, green_score, (550, 45), (700, 45),
                                         b_life, b_shield, g_life, g_shield, (10, 70), (screen_width - 430, 70))
 
-
                 if current_time - image_update > lightning_cooldown:
                     image_update = current_time
                     frame_background = screens.frame_checker(frame_background, max_lightning_frames)
@@ -152,9 +151,7 @@ class Game:
                         image_update_random = current_time
                         random_x = random.randint(10, 1325)
 
-
-                screens.background_lightning(lightning_sheet_img, lightning_frame_width,
-                                              lightning_sheet_height,
+                screens.background_lightning(lightning_sheet_img, lightning_frame_width, lightning_sheet_height,
                                              frame_background, random_x)
 
                 drawGroup.draw(screen)
@@ -185,7 +182,6 @@ class Game:
                     drawGroup.add(blue_power_up)
                     Power.move_right(blue_power_up, 8, 2000)
 
-
                     if g_shield > 0:
                         g_shield = 0
                         cond_g = False
@@ -214,7 +210,6 @@ class Game:
                     drawGroup.add(green_power_up)
                     Power.move_left(green_power_up, -8, -900)
 
-
                     if b_shield > 0:
                         b_shield = 0
                         cond_b = False
@@ -233,7 +228,6 @@ class Game:
                             pygame.display.flip()
                             pygame.time.wait(50)
                         exit()
-
 
                     if b_shield == 0 and cond_b is True:
                         b_vulnerable = 2
@@ -326,7 +320,6 @@ class Game:
                                     pygame.time.wait(50)
                                 exit()
 
-
                             blue_score += 1
                             g_life -= 1
                             g_vulnerable = 1
@@ -390,7 +383,6 @@ class Game:
                         screens.start_screen(frame)
                         pygame.display.flip()
 
-
                 if game_pause:
 
                     if current_time - image_update >= config.return_button_cooldown:
@@ -398,4 +390,3 @@ class Game:
                         frame = screens.frame_checker(frame, config.start_frames)
                         screens.game_pause_screen(frame)
                         pygame.display.flip()
-
